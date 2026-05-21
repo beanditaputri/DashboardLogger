@@ -8,6 +8,12 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -48,7 +54,6 @@ body {
   scrollbar-width: thin;
 }
 
-/* Logo */
 .logo {
   background-color: #1b4b8e;
   padding: 10px;
@@ -63,7 +68,6 @@ body {
   height: auto;
 }
 
-/* Menu */
 .menu-item {
   min-height: 46px;
   padding: 12px;
@@ -117,7 +121,6 @@ select[multiple] {
   padding: 5px;
 }
 
-/* Tombol pilih semua jam dan hapus jam */
 .time-action-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -200,10 +203,7 @@ select[multiple] {
   background-repeat: no-repeat;
 }
 
-#monthSelect {
-  font-size: 13px;
-}
-
+#monthSelect,
 #yearSelect {
   font-size: 13px;
   text-align: left;
@@ -255,19 +255,25 @@ select[multiple] {
   transform: translateY(-2px);
 }
 
+#btnExport:disabled,
+#categoryFilter:disabled,
+#timeFilter:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
 /* =========================
    MAIN CONTENT
 ========================= */
 .main-content {
   flex: 1;
-  padding: 30px 50px 30px 30px;
+  padding: 30px 44px 30px 30px;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   scrollbar-gutter: stable;
 }
 
-/* Judul utama dashboard */
 .header-title {
   background: rgba(255, 255, 255, 0.7);
   padding: 15px 40px;
@@ -281,7 +287,6 @@ select[multiple] {
   z-index: 5;
 }
 
-/* Semua halaman */
 .view-section {
   display: none;
   margin-top: 60px;
@@ -502,10 +507,13 @@ select[multiple] {
   padding: 14px 18px;
   border-radius: 14px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   background: rgba(255, 255, 255, 0.75);
   color: #1f2d3d;
   border: 1px solid rgba(255,255,255,0.75);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .data-status.loading {
@@ -532,6 +540,28 @@ select[multiple] {
   border: 1px solid #f8b4b4;
 }
 
+.loading-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+  animation: loadingPulse 0.9s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
 .filter-summary {
   margin: 0 0 18px 0;
   padding: 12px 16px;
@@ -552,7 +582,7 @@ select[multiple] {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 15px;
   margin-bottom: 20px;
-  padding: 4px 10px 10px 0;
+  padding: 4px 8px 10px 0;
   overflow: visible;
 }
 
@@ -628,6 +658,7 @@ select[multiple] {
   position: relative;
   height: 250px;
   width: 100%;
+  contain: content;
 }
 
 .chart-empty {
@@ -657,46 +688,73 @@ select[multiple] {
   flex: 1;
   background: white;
   border-radius: 10px;
-  padding: 15px;
-  height: 240px;
-  overflow-y: auto;
-  overflow-x: auto;
+  padding: 0;
+  height: 260px;
+  overflow: auto;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  position: relative;
+  contain: layout paint;
 }
 
 .data-table-wrapper h4 {
-  margin-bottom: 10px;
+  margin: 0;
+  padding: 15px 15px 10px 15px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 table.data-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 12px;
+}
+
+table.data-table thead {
+  position: sticky;
+  top: 48px;
+  z-index: 15;
 }
 
 table.data-table th,
 table.data-table td {
-  border: 1px solid #eee;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   padding: 8px;
   text-align: center;
   white-space: nowrap;
+  background: #ffffff;
 }
 
 table.data-table th {
   background: #f8f9fa;
-  font-weight: 600;
+  font-weight: 700;
   position: sticky;
-  top: 0;
-  z-index: 2;
+  top: 48px;
+  z-index: 16;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+table.data-table tbody td {
+  position: relative;
+  z-index: 1;
+}
+
+.table-limit-note {
+  background: #fff7e6 !important;
+  color: #8a5a00;
+  font-weight: 700;
+  text-align: center;
 }
 
 /* =========================
    RESPONSIVE
-   Scorecard tetap sejajar 6 kolom
 ========================= */
 @media (max-width: 1200px) {
   .main-content {
-    padding: 30px 38px 30px 24px;
+    padding: 30px 36px 30px 24px;
   }
 
   .scorecards {
