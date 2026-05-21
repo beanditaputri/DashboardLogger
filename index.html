@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>Dashboard Data Logger</title>
 
   <!-- Google Fonts -->
@@ -14,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="./style.css?v=github-optimized-1">
+  <link rel="stylesheet" href="./style.css?v=github-final-1">
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -504,8 +501,8 @@
     // =========================
     // PERFORMANCE SETTINGS
     // =========================
-    const MAX_TABLE_ROWS = 200;      // Batasi render tabel agar GitHub Pages tetap ringan.
-    const MAX_CHART_POINTS = 250;    // Batasi titik grafik agar Chart.js tetap ringan di GitHub Pages.
+    const MAX_TABLE_ROWS = 250;      // Batasi render tabel agar browser tidak freeze.
+    const MAX_CHART_POINTS = 300;    // Batasi titik grafik agar Chart.js tetap ringan.
     const DASHBOARD_DEBOUNCE_MS = 80;
 
     let dashboardUpdateTimer = null;
@@ -637,10 +634,20 @@
     function setDataStatus(message, type = 'info') {
       const el = document.getElementById('dataStatus');
       if (!el) return;
-      el.textContent = message;
-      el.className = `data-status ${type}`;
-    }
 
+      el.className = `data-status ${type}`;
+      el.innerHTML = '';
+
+      const textSpan = document.createElement('span');
+      textSpan.textContent = message;
+      el.appendChild(textSpan);
+
+      if (type === 'loading') {
+        const dot = document.createElement('span');
+        dot.className = 'loading-dot';
+        el.appendChild(dot);
+      }
+    }
     function updateFilterSummary(tempCount = 0, humCount = 0) {
       const el = document.getElementById('filterSummary');
       if (!el || currentView === 'home') return;
@@ -1445,7 +1452,7 @@
           const td = document.createElement('td');
           td.colSpan = colspan;
           td.className = 'table-limit-note';
-          td.textContent = `Menampilkan ${MAX_TABLE_ROWS} dari ${rows.length} baris agar dashboard tetap ringan di GitHub Pages. Export Data tetap berisi seluruh data hasil filter.`;
+          td.textContent = `Menampilkan ${MAX_TABLE_ROWS} dari ${rows.length} baris agar dashboard tetap ringan. Export Data tetap berisi seluruh data hasil filter.`;
           tr.appendChild(td);
           fragment.appendChild(tr);
         }
