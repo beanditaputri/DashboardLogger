@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="./style.css?v=table-loading-fix-1">
+  <link rel="stylesheet" href="./style.css?v=github-optimized-1">
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -634,23 +634,12 @@
       return uniqueList(out);
     }
 
-function setDataStatus(message, type = 'info') {
-  const el = document.getElementById('dataStatus');
-  if (!el) return;
-
-  el.className = `data-status ${type}`;
-  el.innerHTML = '';
-
-  const textSpan = document.createElement('span');
-  textSpan.textContent = message;
-  el.appendChild(textSpan);
-
-  if (type === 'loading') {
-    const dot = document.createElement('span');
-    dot.className = 'loading-dot';
-    el.appendChild(dot);
-  }
-}
+    function setDataStatus(message, type = 'info') {
+      const el = document.getElementById('dataStatus');
+      if (!el) return;
+      el.textContent = message;
+      el.className = `data-status ${type}`;
+    }
 
     function updateFilterSummary(tempCount = 0, humCount = 0) {
       const el = document.getElementById('filterSummary');
@@ -1456,7 +1445,7 @@ function setDataStatus(message, type = 'info') {
           const td = document.createElement('td');
           td.colSpan = colspan;
           td.className = 'table-limit-note';
-          td.textContent = `Menampilkan ${MAX_TABLE_ROWS} dari ${rows.length} baris. Export Data tetap berisi seluruh data hasil filter.`;
+          td.textContent = `Menampilkan ${MAX_TABLE_ROWS} dari ${rows.length} baris agar dashboard tetap ringan di GitHub Pages. Export Data tetap berisi seluruh data hasil filter.`;
           tr.appendChild(td);
           fragment.appendChild(tr);
         }
